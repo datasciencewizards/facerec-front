@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/icon.css">
+    <link rel="stylesheet" href="css/load.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+
+</head>
+<body>
+
+  <!--<div class="topnav">-->
+    <ul class="topnav">
+      <li class="nav-item">
+        <!--<form action = "http://localhost:5000/admin" method = "post" enctype="multipart/form-data">-->
+          <a href="loginpage.html"><button id = "adminbutton">Admin Portal</button></a>
+
+          <!-- </form> -->
+      </li>
+      </ul>
+
+
+
+
+  <!--<h2>Admin Portal Redirection</h2>
+
+  <form action = "http://192.168.0.109:5000/admin" method = "post" enctype="multipart/form-data">
+  <input type = "submit" value="Visit admin portal">
+  </form>-->
+
+  <!--<button onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</button>-->
+
+  <!--<div id="id01" class="modal">
+
+    <form class="modal-content animate" action = "http://192.168.0.109:5000/admin" method="get">
+      <div class="imgcontainer">
+        <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+        <img src="/static/logo.png" alt="Avatar" class="avatar">
+      </div>
+
+      <div class="container">
+        <label for="uname"><b>Username</b></label>
+        <input type="text" id="uname" placeholder="Enter Username" name="uname" required>
+
+        <label for="psw"><b>Password</b></label>
+        <input type="password" id = "psw" placeholder="Enter Password" name="psw" required>
+
+        <button type="submit" onclick="validate()">Login</button>
+        <label>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </label>
+      </div>
+
+      <div class="container" style="background-color:#f1f1f1">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <span class="psw">Forgot <a href="#">password?</a></span>
+      </div>
+    </form>
+  </div>-->
+
+<div id="loading-div"></div>
+
+<div id="recognize-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--<button type="button" class="close close-btn" data-dismiss="modal">&times;</button>-->
+        <h4 class="modal-title">Student Details</h4>
+      </div>
+      <div class="modal-body">
+        <p id="display-msg"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="mark-btn" class="btn btn-success" data-dismiss="modal">Mark Attendance</button>
+        <button type="button" class="btn btn-danger close-btn" data-dismiss="modal">Not You? Retake</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p id="display-msg"></p>
+      </div>
+      <div class="modal-footer">
+        <button id="second-modal-btn" type="button" class="btn btn-danger close-btn" data-dismiss="modal">Retake</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" width="640" height="480">
+
+  <div class="app">
+
+    <a href="#" id="start-camera" class="visible">Touch here to start the app.</a>
+    <video id="camera-stream" width="640" height="480"></video>
+    <canvas id="overlay"></canvas>
+    <img id="snap">
+
+    <p id="error-message"></p>
+
+    <div class="controls">
+      <a href="#" id="delete-photo" title="Delete Photo" class="disabled"><i class="material-icons">clear</i></a>
+      <a href="#" id="take-photo" title="Take Photo" class="capture"><i class="material-icons">camera</i></a>
+      <a href="#" id="download-photo" title="Save Photo" class="disabled"><i class="material-icons">done</i></a>
+    </div>
+
+    <!-- Hidden canvas element. Used for taking snapshot of video. -->
+    <canvas></canvas>
+  </div>
+
+</div>
+
+<!--<img id = "logodsw" src="/static/logo.png" style="width:50%"><img>-->
+
+<!--<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/request.js"></script>
+<script src="/static/js/script.js"></script>
+<script src="/static/js/refresh.js"></script>
+<script src="/static/js/face-api.min.js"></script>
+<script src="/static/js/faceDetectionControls.js"></script>-->
+
+<script src = "js/jquery.min.js"></script>
+<script src = "js/bootstrap.min.js"></script>
+<script src = "js/face-api.js"></script>
+<script src = "js/face-api.min.js"></script>
+<script src = "js/faceDetectionControls.js"></script>
+
+<script src = "js/refresh.js"></script>
+<script src = "js/request.js"></script>
+<script src = "js/script.js"></script>
+
+</body>
+
+<script>
+// Get the modal
+var modal = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Below function Executes on click of login button.
+function validate(){
+var username = document.getElementById("uname").value;
+var password = document.getElementById("psw").value;
+if ( username == "qwerty" && password == "123"){
+//alert ("Login successful");
+//window.location.href = "http://192.168.0.109:5000/admin"; // Redirecting to other page.
+return false;
+}
+else{
+alert("Sorry! Wrong credentials. Please try again!!");
+window.location = "/templates/index.html"
+return false;
+}
+}
+</script>
+
+</html>

@@ -1,0 +1,183 @@
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<style>
+    input[type=text], input[type=file],select {
+  width: 40vw;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+input[type=file]{
+    border: 2px dotted #ccc;
+}
+
+input[type=submit] {
+  width: 40vw;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.form{
+   margin: auto;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 25px 60px;
+  /* padding-left: 10%; */
+  display: flex;
+  justify-content: center;
+  width: 40vw;
+}
+h1{
+    text-align: center;
+    font-family: "Arial Black", Gadget, sans-serif;
+}
+
+
+
+</style>
+<body>
+
+    <div>
+        <h1>ADMIN PORTAL</h1>
+    </div>
+    <div class="form">
+    <form id="adminform" action = "google.com" method = "post" enctype="multipart/form-data">
+        <label for="id" style="font-family: 'Arial Black', Gadget, sans-serif;">Student Id:</label><br>
+        <input type="text" id="id" name="id"><br><br>
+        <label for="fname" style="font-family: 'Arial Black', Gadget, sans-serif;">Student name:</label><br>
+        <input type="text" id="fname" name="fname"><br><br>
+        <label for="left" style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Left Profile</label><br>
+        <input type="file" id="lphoto" name="leftphoto"><br>
+        <label for="right" style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Right Profile</label><br>
+        <input type="file" id="rphoto" name="rightphoto"><br>
+        <label for="front" style="font-family: 'Trebuchet MS', Helvetica, sans-serif;">Front Profile</label><br>
+        <input type="file"id="fphoto" name="frontphoto">
+
+
+        <input type = "submit" id="picupload" value="Upload">
+    </form>
+
+    <!--<div id="id01" class="modal">
+
+        <form class="modal-content animate" action = "/success" method="post">
+          <div class="imgcontainer">
+            <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+            <img src="/static/logo.png" alt="Avatar" class="avatar">
+          </div>
+
+          <div class="container">
+            <label for="uname"><b>Username</b></label>
+            <input type="text" id="uname" placeholder="Enter Username" name="uname" id="uname" required>
+
+            <label for="psw"><b>Password</b></label>
+            <input type="password" id = "psw" placeholder="Enter Password" name="psw" id="psw" required>
+
+            <input type = "submit" value="Login">
+
+            <button type="submit" onclick="validate()">Login</button>
+            <label>
+              <input type="checkbox" checked="checked" name="remember"> Remember me
+            </label>
+          </div>
+
+          <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+            <span class="psw"><a href="#">Forgot password?</a></span>
+          </div>
+        </form>
+      </div>-->
+</div>
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+  $base_url = 'https://facerec-back-env.eba-zvmnqwuy.eu-west-1.elasticbeanstalk.com/'
+
+  /*$("#picupload").on("click", function (e) {
+    e.preventDefault()
+    const id = $("#id").val()
+    const fname = $("#fname").val()
+    const fphoto = $("#fphoto").val()
+    const lphoto = $("#lphoto").val()
+    const rphoto = $("#rphoto").val()
+    $.ajax({
+      type: "POST",
+      url: $base_url + "upload",
+      data: { id,fname,fphoto,lphoto,rphoto },
+      dataType: "json",
+      success: function (result) {
+        console.log(result);
+        if (result.message == "Success") {
+          window.location.href = "http://localhost/FaceRecSeperated/backend/templates/adminpage.html";
+        }
+         else {
+          window.alert("Incorrect username or password. Please try again!")
+        }
+      }
+    });
+  })*/
+$frontphoto = undefined
+document.getElementById('fphoto').addEventListener("change",function(){
+//$("#fphoto").onchange = function(e) {
+  console.log("In function")
+   $frontphoto = this.files[0];
+   //TODO do something with fileList.
+})
+$leftphoto = undefined
+document.getElementById('lphoto').addEventListener("change",function(){
+//$("#fphoto").onchange = function(e) {
+  console.log("In function")
+   $leftphoto = this.files[0];
+   //TODO do something with fileList.
+})
+$rightphoto = undefined
+document.getElementById('rphoto').addEventListener("change",function(){
+//$("#fphoto").onchange = function(e) {
+  console.log("In function")
+   $rightphoto = this.files[0];
+   //TODO do something with fileList.
+})
+  $("#adminform").submit(function(e){
+  // $("#picupload").on("click", function (e) {
+    e.preventDefault()
+    console.log("Line no 132")
+    formdata = new FormData();
+
+    formdata.append("name",$("#fname").val())
+    formdata.append("id",$("#id").val())
+    formdata.append("left",$leftphoto)
+    formdata.append("right",$rightphoto)
+    formdata.append("front",$frontphoto)
+  $.ajax({
+      type: "POST",
+      url: $base_url + "upload",
+      data:formdata,
+      processData: false,
+contentType: false,
+      dataType: "json",
+      success: function (result) {
+        console.log(result);
+        if (result.message == "Success") {
+          window.alert("Images uploaded succesfully!")
+          //window.location.href = "http://localhost/FaceRecSeperated/backend/templates/adminpage.html";
+        }
+         else {
+          window.alert("There was some error in file uploading. Please try again!")
+        }
+      }
+    });
+
+  })
+</script>
+
+</html>
