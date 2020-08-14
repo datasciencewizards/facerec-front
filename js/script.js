@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     video.addEventListener('play', () => {
-            faceapi.loadFaceLandmarkModel('../facerec/weights')
+            faceapi.loadFaceLandmarkModel('../facerec-front/weights')
             //faceapi.loadFaceRecognitionModel('../../weights')
-            faceapi.loadTinyFaceDetectorModel('../facerec/weights')
+            faceapi.loadTinyFaceDetectorModel('../facerec-front/weights')
           setInterval(async () => {
             //await faceapi.nets.tinyfacedetector.loadFromUri('../../weights')
             //const useTinyModel = true
